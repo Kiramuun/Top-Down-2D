@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerMove : MonoBehaviour
     public Animator _animatorRef;
     Rigidbody2D _rigidB;
     public float _speed;
+    UIManager _managerUI;
 
     void Awake()
     {
@@ -44,6 +46,8 @@ public class PlayerMove : MonoBehaviour
 
         _animatorRef.SetFloat("Horizontal", horizontal);
         _animatorRef.SetFloat("Vertical", vertical);
+
+        Menu();
     }
 
     void FixedUpdate()
@@ -52,5 +56,14 @@ public class PlayerMove : MonoBehaviour
         _rigidB.velocity = velocity;
 
         _animatorRef.SetFloat("speedMove",Mathf.Abs(_rigidB.velocity.magnitude));
+    }
+
+    void Menu()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            Time.timeScale = 0f;
+            SceneManager.LoadScene("UI Menu", LoadSceneMode.Single);
+        }
     }
 }
